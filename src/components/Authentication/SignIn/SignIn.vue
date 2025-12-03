@@ -18,7 +18,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="example@gmail.com"
+                  placeholder=""
                   v-model="state.email"
                 />
               </div>
@@ -29,7 +29,7 @@
                     :type="showPassword ? 'text' : 'password'"
                     id="password"
                     class="form-control"
-                    placeholder="***********"
+                    placeholder=""
                     v-model="state.password"
                   />
                   <i
@@ -48,18 +48,6 @@
               </div>
               <div class="form-group mb-4 d-flex justify-content-between">
                 <div class="c-form-check form-check">
-                  <!-- <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="flexCheckDefault"
-                  />
-                  <label
-                    class="form-check-label fs-14 text-body ms-0"
-                    for="flexCheckDefault"
-                  >
-                    Remember me
-                  </label> -->
                 </div>
                 <router-link
                   to="/forget-password"
