@@ -58,13 +58,14 @@
                   </button>
                   <ul class="dropdown-menu">
                     <li>
-                      <a class="dropdown-item d-flex align-items-center"  href="javascript:;" @click="viewReceipt(doc.id)">
+                      <a class="dropdown-item d-flex align-items-center" href="javascript:;" @click="viewReceipt(doc.id)">
                         <vue-feather type="eye"></vue-feather>
                         View
                       </a>
                     </li>
-                    <li>
-                      <a class="dropdown-item d-flex align-items-center" href="javascript:;" @click="download(doc.receiptNumber)">
+                    <li v-if="isSuperAdmin">
+                      <a class="dropdown-item d-flex align-items-center" href="javascript:;"
+                        @click="download(doc.receiptNumber)">
                         <vue-feather type="printer"></vue-feather>
                         Download
                       </a>
@@ -75,6 +76,9 @@
             </tr>
           </tbody>
         </table>
+        <div v-if="latestReceipts.length < 3" class="d-flex justify-content-center align-items-center" style="height: 10vh;">
+
+        </div>
       </div>
       <div v-else class="d-flex justify-content-center align-items-center" style="height: 20vh;">
         <h6>Receipts have not been requested yet.</h6>
@@ -103,6 +107,7 @@
 import { ref } from "vue"
 import { useDashboardStore } from '@/stores/dashboard'
 import { useReceiptStore } from '@/stores/receipt'
+import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from "pinia"
 import { formatDate } from "@/utils/helper"
 import ReceiptDetail from "@/components/Receipt/ReceiptDetail.vue"
@@ -114,6 +119,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 import { Offcanvas } from "bootstrap"
 
 const { latestReceipts } = storeToRefs(useDashboardStore())
+const { isSuperAdmin } = storeToRefs(useAuthStore())
 const { downloadReceipt } = useReceiptStore()
 
 const receiptData = ref<Receipt | null>(null)

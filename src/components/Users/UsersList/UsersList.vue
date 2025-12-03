@@ -82,11 +82,13 @@ const flattenUser = (user: User): FlattenedUser => {
 };
 
 const flattenUsers = (): FlattenedUser[] => {
-  return props.users.map(flattenUser);
+  return props.users
+    .filter(user => !user.roles.includes("SuperAdmin"))
+    .map(flattenUser);
 };
 
 const onDelete = (user: FlattenedUser) => {
-  const userToDelete = props.users.find((u) => { return u.id === user.id})
+  const userToDelete = props.users.find((u) => { return u.id === user.id })
 
   if (userToDelete) emit("delete-user", userToDelete)
 }
