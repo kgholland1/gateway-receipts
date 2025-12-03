@@ -112,7 +112,6 @@ export const useUserStore = defineStore("user", () => {
         err instanceof Error
           ? err
           : new Error("Failed to fetch profile details");
-      console.log(err);
       return { success: false };
     }
   };
