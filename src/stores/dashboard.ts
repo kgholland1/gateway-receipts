@@ -1,13 +1,13 @@
-import { ref } from "vue"
-import { defineStore } from "pinia"
-import { authApi } from "@/plugins/axios"
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import { authApi } from "@/plugins/axios";
 import type { CustomAxiosRequestConfig } from "@/plugins/axios";
 import type {
   DailyReceiptCount,
   WeeklyReceiptCount,
   AgencyReceiptCount,
 } from "@/types/dashboard";
-import type { Receipt } from "@/types/receipt"
+import type { Receipt } from "@/types/receipt";
 
 const API_ENDPOINTS = {
   DAILY_TOTALS: "/api/platformreceipts/today-totals",
@@ -55,10 +55,21 @@ export const useDashboardStore = defineStore("dashboard", () => {
       weeklyReceiptCount.value = weeklyResponse.data;
       agencyReceiptCount.value = agencyResponse.data;
       latestReceipts.value = latestResponse.data;
-
+      if (weeklyReceiptCount.value) {
+        weeklyReceiptCount.value.selectedDate  = weeklyReceiptCount.value.selectedDate.map(
+          (d) => {
+            const [m, d2, y] = d.split("/");
+            return `${d2}/${m}/${y}`;
+          }
+        )
+      }
     } catch (err) {
       error.value =
-        err instanceof Error ? err : new Error("Unknown error occurred");
+        err instanceof Error
+          ? err
+          : new Error(
+              "Connection issue detected. Please verify your internet connection."
+            );
     }
   };
 

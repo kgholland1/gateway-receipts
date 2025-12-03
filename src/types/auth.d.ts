@@ -20,3 +20,6 @@ export type UserAgency = {
   prefix: string
 }
 
+export type ForgotPassword = {
+  email: string
+}

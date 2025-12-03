@@ -69,7 +69,7 @@
                         View
                       </a>
                     </li>
-                    <li>
+                    <li v-if="isSuperAdmin">
                       <a class="dropdown-item d-flex align-items-center" href="javascript:;" @click="download(doc.receiptNumber)">
                         <vue-feather type="printer"></vue-feather>
                         Download
@@ -169,6 +169,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { useReceiptStore } from '@/stores/receipt'
+import { useAuthStore } from '@/stores/auth'
 import { formatDate } from "@/utils/helper"
 import ReceiptDetail from "@/components/Receipt/ReceiptDetail.vue"
 import type { Receipt } from "@/types/receipt"
@@ -187,6 +188,7 @@ const emit = defineEmits(["changeCurrentPage"])
 
 const { downloadReceipt } = useReceiptStore()
 const { pagination } = storeToRefs(useReceiptStore())
+const { isSuperAdmin } = storeToRefs(useAuthStore())
 
 const receiptData = ref<Receipt | null>(null)
 
